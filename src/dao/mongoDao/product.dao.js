@@ -1,7 +1,7 @@
 import { productModel } from "../models/product.model.js";
 
-const getAll = async () => {
-  const products = await productModel.find();
+const getAll = async (query, options) => {
+  const products = await productModel.paginate(query, options);
   return products;
 };
 
@@ -12,25 +12,25 @@ const getById = async (id) => {
 
 const create = async (data) => {
   const product = await productModel.create(data);
-  return product;  
-}
+  return product;
+};
 
 const update = async (id, data) => {
-    await productModel.findByIdAndUpdate(id, data);
-    const product = await productModel.findById(id);
-    return product;
-}
+  await productModel.findByIdAndUpdate(id, data);
+  const product = await productModel.findById(id);
+  return product;
+};
 
 const deleteOne = async (id) => {
-    const product = await productModel.deleteOne({_id: id});
-    if(product.deletedCount === 0) return false;
-    return true;
-}
+  const product = await productModel.deleteOne({ _id: id });
+  if (product.deletedCount === 0) return false;
+  return true;
+};
 
 export default {
   getAll,
   getById,
   create,
   update,
-  deleteOne
-}
+  deleteOne,
+};
